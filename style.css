@@ -1,0 +1,34 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+html{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body{
+    width: 30vw;
+    border: 1px solid red;
+}
+.tiles-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto;
+    row-gap: 0;
+    gap: 0;
+}
+.tiles{
+    border: 1px solid white;
+    background: gray;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-content: center;
+    font-size: 5rem;
+}
+.controls-container{
+    display: flex;
+    place-content: center;
+}
