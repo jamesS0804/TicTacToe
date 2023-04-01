@@ -2,11 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Page title</title>
-    <link rel="stylesheet" type="text/css"        href="style.css">
+    <title>TicTacToe</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
+    <div class="pregame-container">
+        <p>Please choose Player 1's character:</p>
+        <div>
+            <input type="button" id="x-character" value="X">
+            <input type="button" id="o-character" value="O">    
+        </div>
+    </div>
+    <div class="turn-info">
+        <div id="game-turn">Turn 1</div>
+        <div id="player-turn">Player 1's turn</div>
+    </div>
     <div class="tiles-container">
         <div id="t00" class="tiles"></div>
         <div id="t01" class="tiles"></div>

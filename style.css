@@ -1,17 +1,54 @@
+:root{
+    font-size: 10px;
+}
 *{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 html{
-    height: 80vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 body{
+    position: relative;
     width: 30vw;
     border: 1px solid red;
+    padding: 1em;
+    font-size: xx-large;
+}
+.pregame-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    border: 1px solid black;
+    background: white;
+}
+.pregame-container div {
+    display: flex;
+    gap: 2rem;
+}
+input{
+    padding: 1em;
+    font-size: x-large;
+}
+.turn-info{
+    border: 1px solid black;
+    padding: 1em;
+    text-align: center;
+    font-size: x-large;
+}
+#game-turn{
+    font-size: medium;
 }
 .tiles-container{
     display: grid;
@@ -31,4 +68,7 @@ body{
 .controls-container{
     display: flex;
     place-content: center;
+}
+.unshow{
+    display: none;
 }

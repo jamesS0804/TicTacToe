@@ -2,15 +2,157 @@ const tiles = document.querySelectorAll('.tiles')
 const previous_button = document.querySelector('#previous')
 const reset_button = document.querySelector('#reset')
 const next_button = document.querySelector('#next')
+const game_turn_text = document.querySelector('#game-turn')
+const player_turn_text = document.querySelector('#player-turn')
+const pregame_container = document.querySelector('.pregame-container')
+const x_character_button = document.querySelector('#x-character')
+const o_character_button = document.querySelector('#o-character')
 let board = [[,,,],[,,,],[,,,]]
 let board_history = [[[,,,],[,,,],[,,,]]]
 let move_index = 0
-let player_1 = 'X'
-let player_2 = 'O'
+let game_over = false
+let player_1 = ''
+let player_2 = ''
 let player_turn = 1
 let character = ''
 let turn = 1
 
+// Experimental code using objects
+
+class Player{
+    constructor(name,character){
+        this.name = name
+        this.character = character
+    }
+}
+const player1 = new Player('James')
+const player2 = new Player('Danaya')
+console.log(player1)
+
+class Game{
+
+}
+
+// End of experimental code
+
+previous_button.addEventListener('click',prevButtonClicked=()=>{
+    move_index -= 1
+    turn -= 1
+    board = setRecordedBoard(board_history[move_index])
+    setButtons()
+    startGame().next()
+})
+next_button.addEventListener('click',nextButtonClicked=()=>{
+    move_index += 1
+    turn += 1
+    board = setRecordedBoard(board_history[move_index])
+    setButtons()
+    startGame().next()
+})
+reset_button.addEventListener('click',setNewBoard)
+x_character_button.addEventListener('click',setCharacter)
+o_character_button.addEventListener('click',setCharacter)
+
+function setCharacter(e){
+    character = e.target.value
+    if(character === 'X'){
+        player_1 = 'X'
+        player_2 = 'O'
+    } else {
+        player_1 = 'O'
+        player_2 = 'X'
+    }
+    setNewBoard()
+}
+function setButtons(){
+    if(game_over === true){
+        for(let tile of tiles){
+            tile.removeEventListener('click',getTileInfo)
+        }
+        previous_button.disabled = false
+        next_button.disabled = false
+        if(move_index === 0){
+            previous_button.disabled = true
+        }
+        if(move_index === board_history.length - 1 || board_history.length === 1){
+            next_button.disabled = true
+        }
+    } else {
+        previous_button.disabled = true
+        next_button.disabled = true
+    }
+    if(turn % 2 === 0){
+        player_turn = 2
+        character = player_2
+    }else{
+        player_turn = 1
+        character = player_1
+    }
+    game_turn_text.innerText = `Turn ${turn}`
+    player_turn_text.innerText = `Player ${player_turn}'s turn (${character})`  
+}
+function setNewBoard(){
+    pregame_container.classList.toggle('unshow')
+    for(let tile of tiles){
+        tile.style.background = "gray"
+        tile.addEventListener('click',getTileInfo)
+    }
+    board = [[,,,],[,,,],[,,,]]
+    board_history = [[[,,,],[,,,],[,,,]]]
+    move_index = 0
+    turn = 1
+    character = player_1
+    player_turn = 1
+    game_over = false
+    setButtons()
+    for(let tile of tiles){
+        tile.innerText = ""
+    }
+    startGame().next()
+}
+function* startGame(){
+    setButtons() 
+    character = player_1
+    while(!game_over){
+        console.log('~~~~~~~~~~~~~~~~')
+        console.log(`after turn: ${turn}`)
+        if(turn === 10){
+            alert('Draw!')
+            game_over = true
+            setButtons()
+            break
+        }
+        if(turn % 2 === 0){
+            player_turn = 2
+            character = player_2
+        }else{
+            player_turn = 1
+            character = player_1
+        }
+        game_turn_text.innerText = `Turn ${turn}`
+        player_turn_text.innerText = `Player ${player_turn}'s turn (${character})`
+        console.log(`player_turn: ${player_turn}`)
+        console.log(`character: ${character}`)
+        console.log(`before turn: ${turn}`)
+        yield turn += 1
+    }
+    console.log(`Game_over player_turn: ${player_turn}`)
+    console.log(`Game_over character: ${character}`)
+    player_turn_text.innerText = `Player ${player_turn} (${character}) won!`
+}
+function getTileInfo(e){
+    let tile_id = e.target.id
+    let chosen_tile = document.querySelector(`#${tile_id}`)
+    if(chosen_tile.innerText) return
+    placeCharacterOnTile(chosen_tile, character)
+    if(turn > 2){
+        console.log('checking...')
+        checkIfWon(chosen_tile,character)
+    }
+    move_index += 1
+    setButtons()
+    startGame().next()
+}
 function placeCharacterOnTile(tile, character){
     let tile_id_array = tile.id.split('')
     let tile_row = tile_id_array[1]
@@ -22,7 +164,7 @@ function placeCharacterOnTile(tile, character){
     board = new_board
     tile.innerText = character
 }
-function setNewBoard(new_board){
+function setRecordedBoard(new_board){
     let x = 0
     let y = 0
     for(let tile of tiles){
@@ -34,89 +176,91 @@ function setNewBoard(new_board){
         y += 1
     }
 }
-previous_button.addEventListener('click',()=>{
-    move_index -= 1
-    turn -= 2
-    board = setNewBoard(board_history[move_index])
-    setButtons()
-    startGame().next()
-})
-next_button.addEventListener('click',()=>{
-    move_index += 1
-    board = setNewBoard(board_history[move_index])
-    setButtons()
-    startGame().next()
-})
-reset_button.addEventListener('click',()=>{
-    board = [[,,,],[,,,],[,,,]]
-    board_history = [[[,,,],[,,,],[,,,]]]
-    move_index = 0
-    turn = 1
-    character = player_1
-    player_turn = 1
-    setButtons()
-    for(let tile of tiles){
-        tile.innerText = ""
-    }
-    startGame().next()
-})
-function setButtons(){
-    previous_button.disabled = false
-    next_button.disabled = false
-    if(move_index === 0){
-        previous_button.disabled = true
-    }
-    if(move_index === board_history.length - 1 || board_history.length === 1){
-        next_button.disabled = true
-    }   
-}
-function* startGame(){
-    setButtons()
-    let game_over = false 
-    character = player_1
-    while(!game_over){
-        console.log(turn)
-        if(turn === 10){
-            alert('Draw!')
-            game_over = true
-        }
-        if(turn % 2 === 0){
-            console.log('Here!')
-            player_turn = 2
-            character = player_2
-        }else{
-            player_turn = 1
-            character = player_1
-        }
-        //alert(`Player ${player_turn}'s turn`)
-        yield turn += 1
-    }
-}
 function checkIfWon(tile, character){
     let tile_id_array = tile.id.split('')
-    let tile_row = tile_id_array[1]
-    let tile_col = tile_id_array[2]
-    
-    
+    let tile_row = Number(tile_id_array[1])
+    let tile_col = Number(tile_id_array[2])
+    switch(tile_row){
+        case 0:
+            horizontal(tile_row, character)
+            vertical(tile_col, character)
+            if(tile_col !== 1){
+                diagonal(character)
+            }
+            break
+        case 1:
+            horizontal(tile_row, character)
+            vertical(tile_col, character)
+            if(tile_col === 1){
+                diagonal(character)
+            }
+            break
+        case 2:
+            horizontal(tile_row, character)
+            vertical(tile_col, character)
+            if(tile_col !== 1){
+                diagonal(character)
+            }
+            break
+        default:
+            break
+    }
 }
-for(let tile of tiles){
-    tile.addEventListener('click',(e)=>{
-        let tile_id = e.target.id
-        let chosen_tile = document.querySelector(`#${tile_id}`)
-        placeCharacterOnTile(chosen_tile, character)
-        if(turn > 5){
-            console.log('checking...')
-            checkIfWon(chosen_tile,character)
+function horizontal(row,character){
+    for(let y=0;y<3;y++){
+        if(board[row][y] !== character) return
+    }
+    for(let y=0;y<3;y++){
+        let winning_tiles = document.querySelector(`#t${row}${y}`)
+        winning_tiles.style.background = 'green'
+    }
+    startGame.return()
+}
+function vertical(col,character){
+    for(let x=0;x<3;x++){
+        if(board[x][col] !== character) return
+    }
+    for(let x=0;x<3;x++){
+        let winning_tiles = document.querySelector(`#t${x}${col}`)
+        winning_tiles.style.background = 'green'
+    }
+    game_over = true
+}
+function diagonal(character){
+    let winning_tiles = {}
+    let x = 0
+    let y = 0
+    let forward_slash = true
+    let backward_slash = true
+    while(y<3){
+        if(board[x][y] !== character) forward_slash = false
+        x++,y++
+    }
+    x = 0
+    y = 2
+    while(x<3){
+        if(board[x][y] !== character) backward_slash = false
+        x++,y--
+    }
+    if(!forward_slash && !backward_slash) return
+    if(forward_slash){
+        x = 0
+        y = 0
+        while(y<3){
+            console.log(`board[${x}][${y}]`)
+            winning_tiles = document.querySelector(`#t${x}${y}`)
+            winning_tiles.style.background = 'green'
+            x++,y++
         }
-        move_index += 1
-        setButtons()
-        startGame().next()
-        /*
-        console.log(`index: ${move_index}`)
-        console.log(`board: ${board}`)
-        console.log(`history: ${board_history}`)
-        console.log(`length: ${board_history.length}`)
-        */
-    })
+    } else {
+        x = 0
+        y = 2
+        while(x<3){
+            console.log(`board[${x}][${y}]`)
+            winning_tiles = document.querySelector(`#t${x}${y}`)
+            winning_tiles.style.background = 'green'
+            x++,y--
+        }
+    }
+    game_over = true
 }
-startGame().next()
