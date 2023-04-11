@@ -155,31 +155,15 @@ function checkIfWon(tile, character){
     let tile_id_array = tile.id.split('')
     let tile_row = Number(tile_id_array[1])
     let tile_col = Number(tile_id_array[2])
-    switch(tile_row){
-        case 0:
-            horizontal(tile_row, character)
-            vertical(tile_col, character)
-            if(tile_col !== 1){
-                diagonal(character)
-            }
-            break
-        case 1:
-            horizontal(tile_row, character)
-            vertical(tile_col, character)
-            if(tile_col === 1){
-                diagonal(character)
-            }
-            break
-        case 2:
-            horizontal(tile_row, character)
-            vertical(tile_col, character)
-            if(tile_col !== 1){
-                diagonal(character)
-            }
-            break
-        default:
-            break
+
+    horizontal(tile_row, character)
+    vertical(tile_col, character)
+    if(tile_row === 1) {
+         if(tile_col !== 1) return
+    } else {
+         if(tile_col === 1) return
     }
+    diagonal(character)
 }
 function horizontal(row,character){
     for(let y=0;y<3;y++){
