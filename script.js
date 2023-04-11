@@ -17,24 +17,6 @@ let player_turn = 1
 let character = ''
 let turn = 1
 
-// Experimental code using objects
-
-class Player{
-    constructor(name,character){
-        this.name = name
-        this.character = character
-    }
-}
-const player1 = new Player('James')
-const player2 = new Player('Danaya')
-console.log(player1)
-
-class Game{
-
-}
-
-// End of experimental code
-
 previous_button.addEventListener('click',prevButtonClicked=()=>{
     move_index -= 1
     turn -= 1
@@ -111,13 +93,13 @@ function setNewBoard(){
     startGame().next()
 }
 function* startGame(){
+    let draw = false
     setButtons() 
     character = player_1
     while(!game_over){
-        console.log('~~~~~~~~~~~~~~~~')
-        console.log(`after turn: ${turn}`)
         if(turn === 10){
             alert('Draw!')
+            draw = true
             game_over = true
             setButtons()
             break
@@ -131,24 +113,17 @@ function* startGame(){
         }
         game_turn_text.innerText = `Turn ${turn}`
         player_turn_text.innerText = `Player ${player_turn}'s turn (${character})`
-        console.log(`player_turn: ${player_turn}`)
-        console.log(`character: ${character}`)
-        console.log(`before turn: ${turn}`)
         yield turn += 1
     }
-    console.log(`Game_over player_turn: ${player_turn}`)
-    console.log(`Game_over character: ${character}`)
-    player_turn_text.innerText = `Player ${player_turn} (${character}) won!`
+    player_turn -= 1
+    player_turn_text.innerText = draw ? `Draw!` : `Player ${player_turn} (${character}) won!`
 }
 function getTileInfo(e){
     let tile_id = e.target.id
     let chosen_tile = document.querySelector(`#${tile_id}`)
     if(chosen_tile.innerText) return
     placeCharacterOnTile(chosen_tile, character)
-    if(turn > 2){
-        console.log('checking...')
-        checkIfWon(chosen_tile,character)
-    }
+    checkIfWon(chosen_tile,character)
     move_index += 1
     setButtons()
     startGame().next()
@@ -214,7 +189,7 @@ function horizontal(row,character){
         let winning_tiles = document.querySelector(`#t${row}${y}`)
         winning_tiles.style.background = 'green'
     }
-    startGame.return()
+    game_over = true
 }
 function vertical(col,character){
     for(let x=0;x<3;x++){
@@ -247,7 +222,6 @@ function diagonal(character){
         x = 0
         y = 0
         while(y<3){
-            console.log(`board[${x}][${y}]`)
             winning_tiles = document.querySelector(`#t${x}${y}`)
             winning_tiles.style.background = 'green'
             x++,y++
@@ -256,7 +230,6 @@ function diagonal(character){
         x = 0
         y = 2
         while(x<3){
-            console.log(`board[${x}][${y}]`)
             winning_tiles = document.querySelector(`#t${x}${y}`)
             winning_tiles.style.background = 'green'
             x++,y--
