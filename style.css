@@ -5,52 +5,156 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    color: black;
+    width: 100%;
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
+    font-weight: bolder;
+    
 }
 html{
+    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url(./background.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 body{
-    position: relative;
-    width: 30vw;
-    border: 1px solid red;
+    width: 50%;
     padding: 1em;
-    font-size: xx-large;
+    font-size: x-large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.4px);
+    -webkit-backdrop-filter: blur(4.4px);
 }
 .pregame-container{
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    border: 1px solid black;
-    background: white;
 }
-.pregame-container div {
+.mainmenu-container {
+    width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2em;
+    z-index: 1;
+}
+.mainmenu-container h1 {
+    margin-bottom: 10rem;
+}
+.mainmenu-container p {
+    margin-bottom: 5rem;
+}
+.mainmenu-container div {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1rem;
+}
+.character-selection {
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    gap: 2rem;
+    z-index: 2;
+    font-size: xx-large;
+}
+.character-selection input {
+    font-size: xx-large;
+}
+.character-selection div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     gap: 2rem;
 }
 input{
+    border: 1px solid black;
+    background: transparent;
     padding: 1em;
     font-size: x-large;
 }
+input:hover {
+    animation: blinking 600ms infinite;
+}
+input:disabled {
+    color: gray;
+    animation: none;
+}
+#reset:hover {
+    background: rgb(158, 2, 2);
+}
+@keyframes blinking {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.game-container {
+    max-width: 60%;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    z-index: 1;
+}
+.player-info {
+    width: 200%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.player {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+#player-1 div {
+    text-align: left;
+}
+#player-2 div {
+    text-align: right;
+}
 .turn-info{
+    width: 100%;
     border: 1px solid black;
     padding: 1em;
     text-align: center;
     font-size: x-large;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 }
 #game-turn{
     font-size: medium;
 }
 .tiles-container{
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: auto;
@@ -59,15 +163,52 @@ input{
 }
 .tiles{
     border: 1px solid white;
-    background: gray;
     aspect-ratio: 1/1;
     display: grid;
     place-content: center;
     font-size: 5rem;
+    border: 2px solid black;
+}
+.tiles:nth-child(1) {
+    border-top: transparent;
+    border-left: transparent;
+}
+.tiles:nth-child(2) {
+    border-top: transparent;
+}
+.tiles:nth-child(3) {
+    border-top: transparent;
+    border-right: transparent;
+}
+.tiles:nth-child(4) {
+    border-left: transparent;
+}
+.tiles:nth-child(6) {
+    border-right: transparent;
+}
+.tiles:nth-child(7) {
+    border-left: transparent;
+    border-bottom: transparent;
+}
+.tiles:nth-child(8) {
+    border-bottom: transparent;
+}
+.tiles:nth-child(9) {
+    border-right: transparent;
+    border-bottom: transparent;
 }
 .controls-container{
-    display: flex;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
     place-content: center;
+    gap: 1rem;
+}
+.controls-container input {
+    font-size: large;
+}
+#menu {
+    grid-column-start: 2;
 }
 .unshow{
     display: none;

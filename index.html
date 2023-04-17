@@ -5,34 +5,68 @@
     <title>TicTacToe</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="pregame-container">
-        <p>Please choose Player 1's character:</p>
-        <div>
-            <input type="button" id="x-character" value="X">
-            <input type="button" id="o-character" value="O">    
+        <div class="mainmenu-container">
+            <h1>TicTacToe</h1>
+            <p>Select Game Mode:</p>
+            <div>
+                <input type="button" id="vs-player" value="vs Player">
+                <input type="button" id="vs-computer" value="vs Computer">
+            </div>
+        </div>
+        <div class="character-selection unshow">
+            <p>Player 1's character:</p>
+            <div>
+                <input type="button" id="x-character" value="X">
+                <input type="button" id="o-character" value="O">    
+            </div>
         </div>
     </div>
-    <div class="turn-info">
-        <div id="game-turn">Turn 1</div>
-        <div id="player-turn">Player 1's turn</div>
-    </div>
-    <div class="tiles-container">
-        <div id="t00" class="tiles"></div>
-        <div id="t01" class="tiles"></div>
-        <div id="t02" class="tiles"></div>
-        <div id="t10" class="tiles"></div>
-        <div id="t11" class="tiles"></div>
-        <div id="t12" class="tiles"></div>
-        <div id="t20" class="tiles"></div>
-        <div id="t21"  class="tiles"></div>
-        <div id="t22" class="tiles"></div>
-    </div>
-    <div class="controls-container">
-        <input id="previous" type="button" value="Previous">
-        <input id="reset" type="button" value="Reset">
-        <input id="next" type="button" value="Next">
+    <div class="game-container unshow">
+        <div class="player-info">
+            <div class="player" id="player-1">
+                <div id="player1-name">Player 1:</div>
+                <div id="player1-record">
+                    Win:0
+                    Draw:0
+                    Loss:0
+                </div>
+            </div>
+            <div class="turn-info">
+                <div id="game-turn">Turn 1</div>
+                <div id="player-turn">Player 1's turn</div>
+            </div>
+            <div class="player" id="player-2">
+                <div id="player2-name">Player 2:</div>
+                <div id="player2-record">
+                    Win:0
+                    Draw:0
+                    Loss:0
+                </div>
+            </div>
+        </div>
+        <div class="tiles-container">
+            <div id="t00" class="tiles"></div>
+            <div id="t01" class="tiles"></div>
+            <div id="t02" class="tiles"></div>
+            <div id="t10" class="tiles"></div>
+            <div id="t11" class="tiles"></div>
+            <div id="t12" class="tiles"></div>
+            <div id="t20" class="tiles"></div>
+            <div id="t21" class="tiles"></div>
+            <div id="t22" class="tiles"></div>
+        </div>
+        <div class="controls-container">
+            <input id="previous" type="button" value="Prev">
+            <input id="reset" type="button" value="Reset">
+            <input id="next" type="button" value="Next">
+            <input id="menu" type="button" value="Main Menu">
+        </div>
     </div>
 </body>
 </html>
