@@ -64,7 +64,7 @@ o_character_button.addEventListener('click',setCharacter)
 function setGameMode(mode) {
     game_mode = mode
     if(game_mode === 'vs computer'){
-        player2_name.innerText = 'Computer: '
+        player2_name.innerText = 'Computer '
     }
     main_menu.classList.toggle('unshow')
     character_selection.classList.toggle('unshow')
