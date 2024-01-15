@@ -146,12 +146,15 @@ input:disabled {
 #player-2 div {
     text-align: right;
 }
-.player-info :is(#player1-name, #player-2name) {
-    text-align: center;
+.player-info :is(#player1-name, #player2-name) {
+    line-height: 3rem;
+    height: 7rem;
 }
 #player1-record, #player2-record {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
+    line-height: 3rem;
 }
 .turn-info{
     width: 100%;
@@ -163,11 +166,13 @@ input:disabled {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
-    line-height: 3rem;
+    gap: 3.5rem;
+    line-height: 4rem;
 }
 #game-turn{
-    font-size: medium;
+    font-size: 2.5vw;
+    white-space: nowrap;
+    text-decoration: underline;
 }
 .tiles-container{
     width: 20vw;
@@ -230,7 +235,7 @@ input:disabled {
 .unshow{
     display: none;
 }
-@media only screen and (max-width: 699px) {
+@media only screen and (max-width: 449px) {
     :root {
         font-size: 6px;
     }
@@ -250,7 +255,52 @@ input:disabled {
         font-size: 3.25vw;
     }
     .turn-info {
-        font-size: 2.5vw;
+        font-size: 3.5vw;
+        line-height: 4rem;
+    }
+    #game-turn {
+        font-size: 4vw;
+    }
+    .player-info :is(#player1-name, #player2-name) {
+        line-height: 4rem;
+        height: 8rem;
+    }
+    #player1-record, #player2-record {
+        line-height: 4rem;
+    }
+}
+@media only screen and (min-width: 450px) and (max-width: 699px) {
+    :root {
+        font-size: 6px;
+    }
+    body {
+        width: 90%;
+    }
+    .tiles-container {
+        width: 55vw;
+    }
+    .controls-container{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .controls-container input {
+        font-size: 4.5vw;
+    }
+    .player-info {
+        font-size: 3.25vw;
+    }
+    .turn-info {
+        font-size: 3.5vw;
+        line-height: 5rem;
+    }
+    #game-turn {
+        font-size: 4vw;
+    }
+    .player-info :is(#player1-name, #player2-name) {
+        line-height: 4rem;
+        height: 12rem;
+    }
+    #player1-record, #player2-record {
+        line-height: 5rem;
     }
 }
 @media only screen and (min-width: 700px) and (max-width: 829px) {
@@ -258,7 +308,7 @@ input:disabled {
         width: 75vw;
     }
     .tiles-container {
-        width: 45vw;
+        width: 40vw;
     }
     .controls-container input {
         font-size: 2.5vw;
@@ -267,7 +317,8 @@ input:disabled {
         font-size: 2.25vw
     }
     .turn-info {
-        font-size: 2.5vw;
+        font-size: 3.5vw;
+        line-height: 3rem;
     }
 }
 @media only screen and (min-width: 830px) and (max-width: 970px) {
@@ -285,6 +336,7 @@ input:disabled {
     }
     .turn-info {
         font-size: 2.5vw;
+        line-height: 3rem;
     }
 }
 @media only screen and (min-width: 971px) and (max-width: 1130px) {
@@ -302,6 +354,7 @@ input:disabled {
     }
     .turn-info {
         font-size: 2vw;
+        line-height: 3rem;
     }
 }
 @media only screen and (min-width: 1131px) {
